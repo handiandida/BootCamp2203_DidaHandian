@@ -90,7 +90,7 @@ function main() {
                         console.log('Email anda salah!')
                         myEmail()
                     } else {
-                        return console.log(`Nama : ${nama}, Email anda : ${email}`)
+                        return console.log(`Nama : ${nama}, No : ${hp}, Email anda : ${email}`)
                         rl.close()
                     }
                     })
