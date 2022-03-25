@@ -45,17 +45,20 @@ const saveContact = (name, email, mobile) => {
         // membuat file agar menjadi json
         const contacts = JSON.parse(file)
 
+        //validasi agar nama tidak ada yang sama
         const duplicate = contacts.find((contact) => contact.name === name)
             if(duplicate){
                 console.log('Contact name is already recorded. Use another contact name')
                 return false
             }
         
+            //validasi untuk nomor hp apakah sudah benar sesuai dengan ketentuan kode negara
             if(!validator.isMobilePhone(mobile,'id-ID')){
                 console.log('Nomor anda salah!')
                 return false
             }
 
+            //validasi untuk email atau if didalam if
             if(email){
                 if(!validator.isEmail(email)){
                     console.log('Email anda salah!')
