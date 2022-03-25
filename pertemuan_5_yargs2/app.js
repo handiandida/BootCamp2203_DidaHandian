@@ -73,7 +73,7 @@
 const yargs = require('yargs')
 const contacts = require('./contacts')
 
-//
+//comand untuk menambahkan data
 yargs.command({
     command: 'add',
     describe: 'add new contact',
@@ -112,6 +112,7 @@ yargs.command({
     }
 })
 
+//comand untuk list data
 yargs.command({
     command : 'list',
     describe : 'see contact list',
@@ -121,6 +122,7 @@ yargs.command({
     }
 })
 
+//comand untuk detail data
 yargs.command({
     command : 'detail',
     describe : 'see detail contact',
@@ -139,6 +141,7 @@ yargs.command({
     }
 })
 
+//comand untuk menghapus data
 yargs.command({
     command : 'delete',
     describe : 'contact deleted!',
