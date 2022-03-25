@@ -30,6 +30,7 @@ const questions = (ask) => {
         })
     })
 }
+
 const saveContact = (name, email, mobile) => {
 
         //membuat variabel menjadi object
