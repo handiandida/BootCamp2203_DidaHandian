@@ -33,11 +33,19 @@ app.get('/', (req, res) => {
 })
 
 app.get('/about', (req, res) => {
-    res.render('about', { about : "Latihan EJS", title : "Web EJS"})
+    res.render('about', 
+    { 
+        about : "Latihan EJS", 
+        title : "Web EJS"
+    })
 })
 
 app.get('/contact', (req, res) => {
-    res.render('contact', { contact : "Latihan EJS", title :"Web EJS"})
+    res.render('contact', 
+    { 
+        contact : "Latihan EJS", 
+        title :"Web EJS",
+    })
 })
 
 app.get('/product/:id', (req, res) => {

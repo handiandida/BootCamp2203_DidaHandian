@@ -12,5 +12,13 @@
         <a href="/about">About</a>
         <a href="/contact">Contact</a>
     <p>welcome to my page <%= nama %></p>
+    <h3>Contact List :</h3>
+    <% cont.forEach(function( eachCont){ %>
+        <ul>
+            <li> Nama : <%= eachCont.nama %> </li>
+            <li> Email : <%= eachCont.email %> </li>
+        </ul>
+        
+    <% }) %>
 </body>
 </html>
