@@ -10,6 +10,7 @@ app.set('view engine', 'ejs')
 
 //informasi menggunakan ejs layout
 app.use(expressLayouts)
+app.set('layout','layout/main')
 
 app.get('/', (req, res) => {
     cont = [
@@ -34,7 +35,6 @@ app.get('/', (req, res) => {
         nama : "Hanya Dida yang Tampan", 
         title : "Home Page",
         cont,
-        layout: "layout/main"
     }
     )
 })
@@ -44,7 +44,6 @@ app.get('/about', (req, res) => {
     { 
         about : "Latihan EJS", 
         title : "About Page",
-        layout: "layout/main"
     })
 })
 
@@ -53,7 +52,6 @@ app.get('/contact', (req, res) => {
     { 
         contact : "Latihan EJS", 
         title :"Contact Page",
-        layout: "layout/main"
     })
 })
 
