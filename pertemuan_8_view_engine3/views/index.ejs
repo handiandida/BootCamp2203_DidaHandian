@@ -15,12 +15,13 @@
     <h3>Contact List :</h3>
     <% if (cont.length === 0) { %>
         <h3>Data empty</h3>
-    <% } %>
+        <% } else { %>
     <% cont.forEach(function( eachCont){ %>
         <ul>
             <li> Nama : <%= eachCont.nama %> </li>
             <li> Email : <%= eachCont.email %> </li>
         </ul>    
     <% }) %>
+    <% } %>
 </body>
 </html>
