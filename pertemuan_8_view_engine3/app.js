@@ -10,18 +10,21 @@ app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
     cont = [
-        // {
-        //     nama : "Dida",
-        //     email : "dida@gmail.com"
-        // },
-        // {
-        //     nama : "Handian",
-        //     email : "handian@gmail.com"
-        // },
-        // {
-        //     nama : "Dizda",
-        //     email : "dizda@gmail.com"
-        // },
+        {
+            nama : "Dida",
+            email : "dida@gmail.com",
+            mobile : "081818182525"
+        },
+        {
+            nama : "Handian",
+            email : "handian@gmail.com",
+            mobile : "081321123188"
+        },
+        {
+            nama : "Dizda",
+            email : "dizda@gmail.com",
+            mobile : "0811171117117"
+        },
     ]
     res.render('index', 
     { 
