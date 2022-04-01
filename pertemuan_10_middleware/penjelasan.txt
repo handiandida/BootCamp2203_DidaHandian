@@ -6,6 +6,7 @@ Status code 404 menandakan bahwa data yang diminta tidak terdapat pada server
 
 Dibawah adalah morgan dengan menggunakn preset DEV 
 
+:method :url :status :response-time ms - :res[content-length]
 
 Time: 1648786330371              
 GET / 304 3.651 ms - -                //Mengakses root / dengan status 304 dan membutuhkan waktu selama 3.651 ms
