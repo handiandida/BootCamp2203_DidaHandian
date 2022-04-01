@@ -1,0 +1,24 @@
+Status Code 200 menandakan bahwa halaman browser kita berjalan dengan semestinya
+
+Status code 304 menandakan bahwa halaman browser data tersimpan pada cache dan tidak berubah
+
+Status code 404 menandakan bahwa data yang diminta tidak terdapat pada server
+
+Dibawah adalah morgan dengan menggunakn preset DEV 
+
+
+Time: 1648786330371              
+GET / 304 3.651 ms - -                //Mengakses root / dengan status 304 dan membutuhkan waktu selama 3.651 ms
+GET /css/style.css 304 2.139 ms - -   //Mengakses root / dan memanggil file css dengan status 304 dan membutuhkan waktu selama 2.139 ms
+
+Time: 1648786331087
+GET /about 304 2.915 ms - -           //Mengakses /about dengan status 304 dan membutuhkan waktu selama 2.915 ms
+GET /css/style.css 304 3.175 ms - -   //Mengakses /about dan memanggil file css dengan status 304 dan membutuhkan waktu selama 3.175 ms
+GET /img/dida.jpg 304 0.687 ms - -    //Mengakses /about dan memanggil file img dengan status 304 dan membutuhkan waktu selama 0.687 ms
+
+Time: 1648786331970
+GET /contact 304 2.643 ms - -         //Mengakses /contact dengan status 304 dan membutuhkan waktu selama 2.915 ms
+GET /css/style.css 304 1.136 ms - -   //Mengakses /contact dan memanggil file css dengan status 304 dan membutuhkan waktu selama 1.136 ms
+
+Time menunjukan perhitungan waktu dari per tanggal 1 januari 1970
+
