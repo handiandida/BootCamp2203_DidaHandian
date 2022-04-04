@@ -4,7 +4,7 @@ const port = 3000
 const path = require('path')
 const expressLayouts = require('express-ejs-layouts')
 const morgan = require('morgan')
-const { loadContac, loadContact } = require('./contacts')
+const { loadContact } = require('./contacts') //untuk memanggil contacts.js 
 
 
 //informasi menggunakan morgan
