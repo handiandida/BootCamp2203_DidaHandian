@@ -163,6 +163,14 @@ const destroyContact = (name) => {
     saveContacts(contactNew)
 }
 
+const updateContact = (editContacts) => {
+    const contacts = loadContact()
+    const contactfilter = contacts.filter((contact) => contact.name !== editContacts.oldname)
+    delete editContacts.oldname
+    contactfilter.push(editContacts)
+    saveContacts(contactfilter)
+}
+
 
 
 //untuk bisa di panggil

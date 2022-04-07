@@ -10,7 +10,8 @@
             </ul>
         </div>
     <% } %>
-    <form method="post" action="/contact/edit">
+    <form method="post" action="/contact/update">
+        <input type="hidden" name="oldname" value="<%= contact.oldname || contact.name%>">
         <div class="mb-3 col-md-5">
             <label for="name" class="form-label">Nama</label>
             <input type="text" class="form-control" id="name" name="name" value="<%= contact.name %>" required>
