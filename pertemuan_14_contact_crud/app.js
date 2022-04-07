@@ -29,7 +29,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 6000 }
-  }))
+}))
 
 app.use(flash())
 
@@ -125,6 +125,25 @@ app.get('/contact/delete/:name', (req, res) => {
     }
 })
 
+app.post('/deletedContacts', (req, res) => {
+    var {ceklis} = req.body
+    console.log(ceklis)
+    console.log(ceklis.length)
+    if(Array.isArray(ceklis)){
+        ceklis.forEach( contacted => {
+            destroyContact(contacted)
+            req.flash('msg',`${ceklis.length} data has been deleted`)
+            res.redirect('/contact')
+        })
+    } else {
+        destroyContact(ceklis)
+        req.flash('msg',`${ceklis} data has been deleted`)
+        res.redirect('/contact')
+    }
+    
+    
+})
+
 app.get('/contact/:name', (req, res) => {
     const contact = findContact(req.params.name)
     res.render('detail', 
@@ -134,8 +153,6 @@ app.get('/contact/:name', (req, res) => {
         contact
     })
 })
-
-
 
 app.get('/product/:id', (req, res) => {
     res.send('product id : '+ req.params.id +'<br></br>' + 'category id : ' + req.query.category)

@@ -42,11 +42,12 @@
             <th scope="col ">Action</th>
         </tr>
         </thead>
+    <form action="/deletedContacts" method="post">
         <!-- Perulangan -->
     <% contacts.forEach(function( eachCont ){ %>
             <tbody>
             <tr>
-                <th><input type="checkbox" name="name1" />&nbsp;</th>
+                <th><input type="checkbox" name="ceklis" value="<%= eachCont.name %>"/>&nbsp;</th>
                 <td><%= no++ %> </td>
                 <td><%= eachCont.name %> </td>
                 <td><%= eachCont.mobile %></td>
@@ -57,8 +58,8 @@
                 </td>
             </tr>
             </tbody>
-        
     <% }) %>
     </table>
     <% } %> 
+    <button type="submit" class="btn btn-danger">Delete</button>
 </div>
