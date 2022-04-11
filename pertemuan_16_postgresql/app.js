@@ -24,19 +24,32 @@ app.get("/addasync", async (req, res) => {
     }
 })
 
+//menampilkan list data
 app.get("/list", async (req, res) => {
     try{
         const listCont = await pool.query(`SELECT name, mobile FROM contacts`)
-    res.json(listCont.rows)
+        res.json(listCont.rows)
     } catch (err) {
         console.log(arr.message)
     }
 })
 
+//menampilkan detail data
 app.get("/list/:name", async (req, res) => {
     try{
-        const listCont = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
-    res.json(listCont.rows)
+        const detailCont = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
+    res.json(detailCont.rows)
+    } catch (err) {
+        console.log(arr.message)
+    }
+})
+
+//delete data
+app.get("/delete/:name", async (req, res) => {
+    try{
+        await pool.query(`DELETE FROM contacts where name='${req.params.name}'`)
+        const listCont = await pool.query(`SELECT name, mobile FROM contacts`)
+        res.json(listCont.rows)
     } catch (err) {
         console.log(arr.message)
     }
