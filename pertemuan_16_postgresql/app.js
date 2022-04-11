@@ -18,7 +18,7 @@ app.get("/addasync", async (req, res) => {
         const email = "handian@gmail.com"
         await pool.query(`INSERT INTO contacts VALUES
         ('${name}','${mobile}','${email}') RETURNING * `)
-        const listCont = await pool.query(`SELECT name, mobile FROM contacts`)
+        const listCont = await pool.query(`SELECT * FROM contacts`)
         res.json(listCont.rows)
     } catch (err) {
         console.log(arr.message)
@@ -28,7 +28,7 @@ app.get("/addasync", async (req, res) => {
 //menampilkan list data
 app.get("/list", async (req, res) => {
     try{
-        const listCont = await pool.query(`SELECT name, mobile FROM contacts`)
+        const listCont = await pool.query(`SELECT * FROM contacts`)
         res.json(listCont.rows)
     } catch (err) {
         console.log(arr.message)
@@ -45,11 +45,22 @@ app.get("/list/:name", async (req, res) => {
     }
 })
 
+//update dat
+app.get("/update/:name", async (req, res) => {
+    try{
+        await pool.query(`UPDATE contacts set mobile='081010101010', email='test@gmail.com' where name='${req.params.name}'`)
+        const detailCont = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
+        res.json(detailCont.rows)
+    } catch (err) {
+        console.log(arr.message)
+    }
+})
+
 //delete data
 app.get("/delete/:name", async (req, res) => {
     try{
         await pool.query(`DELETE FROM contacts where name='${req.params.name}'`)
-        const listCont = await pool.query(`SELECT name, mobile FROM contacts`)
+        const listCont = await pool.query(`SELECT * FROM contacts`)
         res.json(listCont.rows)
     } catch (err) {
         console.log(arr.message)
