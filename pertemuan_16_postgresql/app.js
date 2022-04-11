@@ -46,11 +46,11 @@ app.get("/list/:name", async (req, res) => {
 })
 
 //update dat
-app.get("/update/:name", async (req, res) => {
+app.get("/update/:name/:mobile/:email", async (req, res) => {
     try{
-        await pool.query(`UPDATE contacts set mobile='081010101010', email='test@gmail.com' where name='${req.params.name}'`)
-        const detailCont = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
-        res.json(detailCont.rows)
+        await pool.query(`UPDATE contacts set mobile='${req.params.mobile}', email='${req.params.email}' where name='${req.params.name}'`)
+        const listCont = await pool.query(`SELECT * FROM contacts`)
+        res.json(listCont.rows)
     } catch (err) {
         console.log(arr.message)
     }
