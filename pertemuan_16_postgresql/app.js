@@ -38,7 +38,7 @@ app.get("/list", async (req, res) => {
 app.get("/list/:name", async (req, res) => {
     try{
         const arr = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
-        if (!arr.length){
+        if (arr.rowCount == 0){
             res.send(`'${req.params.name}' not found`)
         } else {
             const detailCont = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
@@ -49,11 +49,14 @@ app.get("/list/:name", async (req, res) => {
     }
 })
 
-//update dat
+//update data with view old data and new data 
 app.get("/update/:name/:mobile/:email", async (req, res) => {
     try{
+        const { rows : before } = await pool.query(`SELECT * FROM contacts where name = '${req.params.name}'`)
         await pool.query(`UPDATE contacts set mobile='${req.params.mobile}', email='${req.params.email}' where name='${req.params.name}'`)
-        res.redirect('/list')
+        const { rows : after } = await pool.query(`SELECT * FROM contacts where name = '${req.params.name}'`)
+        res.json({before, after})
+        // res.redirect('/list')
     } catch (err) {
         console.error(err.message)
     }
