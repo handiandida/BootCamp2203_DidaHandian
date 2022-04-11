@@ -16,9 +16,10 @@ app.get("/addasync", async (req, res) => {
         const name = "handian"
         const mobile = "081414141414"
         const email = "handian@gmail.com"
-        const newCont = await pool.query(`INSERT INTO contacts VALUES
+        await pool.query(`INSERT INTO contacts VALUES
         ('${name}','${mobile}','${email}') RETURNING * `)
-        res.json(newCont)
+        const listCont = await pool.query(`SELECT name, mobile FROM contacts`)
+        res.json(listCont.rows)
     } catch (err) {
         console.log(arr.message)
     }
