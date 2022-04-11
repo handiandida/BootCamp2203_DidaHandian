@@ -18,10 +18,9 @@ app.get("/addasync", async (req, res) => {
         const email = "handian@gmail.com"
         await pool.query(`INSERT INTO contacts VALUES
         ('${name}','${mobile}','${email}') RETURNING * `)
-        const listCont = await pool.query(`SELECT * FROM contacts`)
-        res.json(listCont.rows)
+        res.redirect('/list')
     } catch (err) {
-        console.log(arr.message)
+        console.error(err.message)
     }
 })
 
@@ -31,17 +30,22 @@ app.get("/list", async (req, res) => {
         const listCont = await pool.query(`SELECT * FROM contacts`)
         res.json(listCont.rows)
     } catch (err) {
-        console.log(arr.message)
+        console.error(err.message)
     }
 })
 
 //menampilkan detail data
 app.get("/list/:name", async (req, res) => {
     try{
-        const detailCont = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
-    res.json(detailCont.rows)
+        const arr = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
+        if (!arr.length){
+            res.send(`'${req.params.name}' not found`)
+        } else {
+            const detailCont = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
+            res.json(detailCont.rows)
+        }
     } catch (err) {
-        console.log(arr.message)
+        console.error(err.message)
     }
 })
 
@@ -49,10 +53,9 @@ app.get("/list/:name", async (req, res) => {
 app.get("/update/:name/:mobile/:email", async (req, res) => {
     try{
         await pool.query(`UPDATE contacts set mobile='${req.params.mobile}', email='${req.params.email}' where name='${req.params.name}'`)
-        const listCont = await pool.query(`SELECT * FROM contacts`)
-        res.json(listCont.rows)
+        res.redirect('/list')
     } catch (err) {
-        console.log(arr.message)
+        console.error(err.message)
     }
 })
 
@@ -60,10 +63,9 @@ app.get("/update/:name/:mobile/:email", async (req, res) => {
 app.get("/delete/:name", async (req, res) => {
     try{
         await pool.query(`DELETE FROM contacts where name='${req.params.name}'`)
-        const listCont = await pool.query(`SELECT * FROM contacts`)
-        res.json(listCont.rows)
+        res.redirect('/list')
     } catch (err) {
-        console.log(arr.message)
+        console.error(err.message)
     }
 })
 
