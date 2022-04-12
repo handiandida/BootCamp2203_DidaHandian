@@ -28,13 +28,14 @@ const detailContacts =  async (req, res) => {
     try{
         const {rows : detailsql} = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
         detailsql.map(
-            kontaks => 
+            kontaks => {
         res.render('detail', {
             title : 'test detail db',
             kontaks,
             msg: req.flash('msg')
+            })
         })
-        )} catch (err) {
+        } catch (err) {
         console.error(err.message)
     }
 }
@@ -69,14 +70,33 @@ const deleteContacts =  async (req, res) => {
     }
 }
 
-//fungsi update data
+//fungsi memanggil edit data
+const editContacts =  async (req, res) => {
+    try{
+        const {rows : editsql} = await pool.query(`SELECT * FROM contacts where name='${req.params.name}'`)
+        editsql.map(
+            contact => {
+            console.log(contact)
+        res.render('edit_contact', {
+            title : 'test edit db',
+            contact,
+            msg: req.flash('msg')
+            })
+        })
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+// fungsi update data
 const updateContacts =  async (req, res) => {
     try{
         const {name, email, mobile, oldname} = req.body
+        console.log(req.body)
         await pool.query(`UPDATE contacts set name='${name}', mobile='${mobile}', email='${email}'
         where name='${oldname}'`)
         res.render('contact', {
-            title : 'test add db',
+            title : 'test update db',
             msg: req.flash('msg')
         })
         res.redirect('/contact')
@@ -90,5 +110,6 @@ module.exports = {
     detailContacts,
     addContacts,
     deleteContacts,
-    updateContacts
+    updateContacts,
+    editContacts
 }

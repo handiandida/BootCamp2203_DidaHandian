@@ -54,8 +54,6 @@ app.use((req, res, next) => {
 })
 
 
-
-
 app.get('/', (req, res) => {
     const contacts = loadContact()
     res.render('index', 
@@ -104,123 +102,128 @@ app.get('/contact/add', (req, res) => {
 app.post('/contact', db.addContacts)
 app.get('/contact/:name', db.detailContacts)
 app.get('/contact/delete/:name', db.deleteContacts)
+app.get('/contact/edit/:name', db.editContacts)
 app.post('/contact/update', db.updateContacts)
+
+//form edit process
+// app.get('/contact/edit/:name', (req, res) => {
+//     const contact = findContact(req.params.name)
+//     res.render('edit_contact',
+//     {
+//         title : "Add Contact Page",
+//         contact
+//     })
+// })
+
+
 
 
 //data contact process
-app.post('/contact',
-[
-    body('name').custom((value) => {
-        const duplicate = duplicateContact(value)
-            if(duplicate) {
-                throw new Error('Name already in use')
-            } 
-            return true
-        }),
-    check('email','your email is wrong').isEmail(),
-    check('mobile','your mobile phone number is wrong').isMobilePhone('id-ID'),
-], (req, res) => {
-    const error = validationResult(req)
-    if(!error.isEmpty()) {
-        res.render('add_contact', 
-    {  
-        title : "Add Contact Page",
-        error : error.array()
-    })
-    }else {
-    addContact(req.body)
-    req.flash('msg','data added successfully')
-    res.redirect('/contact')
-    }
+// app.post('/contact',
+// [
+//     body('name').custom((value) => {
+//         const duplicate = duplicateContact(value)
+//             if(duplicate) {
+//                 throw new Error('Name already in use')
+//             } 
+//             return true
+//         }),
+//     check('email','your email is wrong').isEmail(),
+//     check('mobile','your mobile phone number is wrong').isMobilePhone('id-ID'),
+// ], (req, res) => {
+//     const error = validationResult(req)
+//     if(!error.isEmpty()) {
+//         res.render('add_contact', 
+//     {  
+//         title : "Add Contact Page",
+//         error : error.array()
+//     })
+//     }else {
+//     addContact(req.body)
+//     req.flash('msg','data added successfully')
+//     res.redirect('/contact')
+//     }
     
-})
+// })
 
 
-//form edit process
-app.get('/contact/edit/:name', (req, res) => {
-    const contact = findContact(req.params.name)
-    res.render('edit_contact',
-    {
-        title : "Add Contact Page",
-        contact
-    })
-})
+
 
 //update contact process
-app.post('/contact/update',
-[
-    body('name').custom((value, {req}) => {
-        const duplicate = duplicateContact(value)
-            if(value !== req.body.oldname && duplicate) {
-                throw new Error('Name already in use')
-            } 
-            return true
-        }),
-    check('email','your email is wrong').isEmail(),
-    check('mobile','your mobile phone number is wrong').isMobilePhone('id-ID'),
-], (req, res) => {
-    const error = validationResult(req)
-    if(!error.isEmpty()) {
-        res.render('edit_contact', 
-    {  
-        title : "Add Contact Page",
-        error : error.array(),
-        contact : req.body
-    })
-    }else {
-    updateContact(req.body)
-    req.flash('msg','data changed successfully')
-    res.redirect('/contact')
-    }
+// app.post('/contact/update',
+// [
+//     body('name').custom((value, {req}) => {
+//         const duplicate = duplicateContact(value)
+//             if(value !== req.body.oldname && duplicate) {
+//                 throw new Error('Name already in use')
+//             } 
+//             return true
+//         }),
+//     check('email','your email is wrong').isEmail(),
+//     check('mobile','your mobile phone number is wrong').isMobilePhone('id-ID'),
+// ], (req, res) => {
+//     const error = validationResult(req)
+//     if(!error.isEmpty()) {
+//         res.render('edit_contact', 
+//     {  
+//         title : "Add Contact Page",
+//         error : error.array(),
+//         contact : req.body
+//     })
+//     }else {
+//     updateContact(req.body)
+//     req.flash('msg','data changed successfully')
+//     res.redirect('/contact')
+//     }
     
-})
+// })
 
 
 //delete contact process
-app.get('/contact/delete/:name', (req, res) => {
-    const contact = findContact(req.params.name)
+// app.get('/contact/delete/:name', (req, res) => {
+//     const contact = findContact(req.params.name)
 
-    if(!contact){
-        res.status(404)
-        res.send('page not found 404')
-    } else {
-        destroyContact(req.params.name)
-        req.flash('msg','Data has been deleted')
-        res.redirect('/contact')
-    }
-})
+//     if(!contact){
+//         res.status(404)
+//         res.send('page not found 404')
+//     } else {
+//         destroyContact(req.params.name)
+//         req.flash('msg','Data has been deleted')
+//         res.redirect('/contact')
+//     }
+// })
 
 
 //delete contact process using checkbox
-app.post('/deletedContacts', (req, res) => {
-    var {ceklis} = req.body
-    console.log(ceklis)
-    console.log(ceklis.length)
-    if(Array.isArray(ceklis)){
-        ceklis.forEach( contacted => {
-            destroyContact(contacted)
-            req.flash('msg',`${ceklis.length} data has been deleted`)
-            res.redirect('/contact')
-        })
-    } else {
-        destroyContact(ceklis)
-        req.flash('msg',`${ceklis} data has been deleted`)
-        res.redirect('/contact')
-    }
+// app.post('/deletedContacts', (req, res) => {
+//     var {ceklis} = req.body
+//     console.log(ceklis)
+//     console.log(ceklis.length)
+//     if(Array.isArray(ceklis)){
+//         ceklis.forEach( contacted => {
+//             destroyContact(contacted)
+//             req.flash('msg',`${ceklis.length} data has been deleted`)
+//             res.redirect('/contact')
+//         })
+//     } else {
+//         destroyContact(ceklis)
+//         req.flash('msg',`${ceklis} data has been deleted`)
+//         res.redirect('/contact')
+//     }
     
     
-})
+// })
 
 //contact detail process
-app.get('/contact/:name', (req, res) => {
-    const contact = findContact(req.params.name)
-    res.render('detail', 
-    {  
-        title :"Contact Detail Page",
-        // layout : "layout/main"
-        contact
-    })
-})
+// app.get('/contact/:name', (req, res) => {
+//     const contact = findContact(req.params.name)
+//     res.render('detail', 
+//     {  
+//         title :"Contact Detail Page",
+//         // layout : "layout/main"
+//         contact
+//     })
+// })
 
 app.get('/product/:id', (req, res) => {
     res.send('product id : '+ req.params.id +'<br></br>' + 'category id : ' + req.query.category)
