@@ -1,0 +1,30 @@
+<div class="container mt-5">
+    <br>
+    <h3>Edit Contact Form</h3>
+    <% if (typeof error != 'undefined') { %>
+        <div class="alert alert-danger d-flex align-items-center col-md-5" role="alert">
+            <ul>
+                <% error.forEach(eror => { %>
+                    <li><%= eror.msg %> </li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+    <form method="post" action="/contact/update">
+        <input type="hidden" name="oldname" value="<%= contact.oldname || contact.name%>">
+        <div class="mb-3 col-md-5">
+            <label for="name" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="name" name="name" value="<%= contact.name %>" required>
+        </div>
+        <div class="mb-3 col-md-5">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="<%= contact.email %>">
+        </div>
+        <div class="mb-3 col-md-5">
+            <label for="mobile" class="form-label">Mobile</label>
+            <input type="text" class="form-control" id="mobile" name="mobile" value="<%= contact.mobile %>" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="/contact" class="btn btn-primary">Cancel</a>
+    </form>
+</div>
