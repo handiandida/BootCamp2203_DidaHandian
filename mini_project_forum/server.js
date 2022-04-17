@@ -9,6 +9,9 @@ const session = require('express-session')
 const flash = require('express-flash')
 const passport = require('passport')
 const initializePassport = require('./passportConfig')
+const multer = require('multer')
+const path = require('path')
+const { rows } = require('pg/lib/defaults')
 
 initializePassport(passport)
 
@@ -35,10 +38,22 @@ app.set('layout', './layout/main')
 
 app.use(express.static('public'))
 
+
+const storageImg = multer.diskStorage({
+    destination : (req, file, cb) => {
+        cb(null, './assets/img')
+    },
+    filename : (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({storage : storageImg})
+
 app.get('/', (req, res) => {
     res.render('index', {
         nama : "Forum App", 
-        title : "Home"
+        title : "Home Page"
     })
 })
 
@@ -54,11 +69,70 @@ app.get('/users/register', checkAuthenticated, (req, res) => {
     })
 })
 
-app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
-    res.render('dashboard', { 
-        title : "Dashboard Page",
-        user : req.user.name
-    })
+app.get('/users/dashboard', checkNotAuthenticated, async (req, res) => {
+    try{    
+            const thread = await getThread()
+            res.render('dashboard', {     
+                title : "Dashboard Page",
+                user : req.user.name,
+                id : req.user.id_user,
+                thread
+            })
+    } catch (err){
+        console.error(err.message)
+    }
+})
+
+
+app.get('/users/profile/:id_user', checkNotAuthenticated, async (req, res) => {
+    try {
+            // const users = await getUsers()
+            res.render('profile', {     
+                title : "Profile Page",
+                user : req.user.name,
+                email : req.user.email,
+                id : req.user.id_user,
+                img : req.user.img,
+                // users
+            })
+            
+    } catch (err){
+        console.error(err.message)
+    }
+})
+
+app.post('/upload', checkNotAuthenticated, upload.single('img'), async (req, res) => {
+    const { name, img} = req.body
+    await pool.query(`UPDATE users SET name='${name}', img='${img}' WHERE id_user='3'`)
+    res.redirect('/users/profile/:id_user')
+})
+
+
+app.get('/users/add-thread', checkNotAuthenticated, async (req, res) => {
+    try {
+            const main = await getMain()
+            const subs = await getSub()
+            res.render('add_thread', { 
+                title : "Add Thread Page",
+                user : req.user.name,
+                id : req.user.id_user,
+                main,
+                subs
+        })
+    }
+    catch(err){
+        console.error(err.message)
+    }
+})
+
+app.post('/users/add-thread', async (req, res) => {
+    try {
+        const { body_thread, date_thread, title_thread, id_main, id_sub, id_user } = req.body
+        const { rows : addThread } = await pool.query(`insert into discussion (body_thread, date_thread, title_thread, id_main, id_sub, id_user) values ('${body_thread}','${date_thread}','${title_thread}','2','3','3')`)
+        console.log(addThread)
+    } catch (err){
+        console.error(err.message)
+    }
 })
 
 app.get('/users/logout', (req, res) => {
@@ -66,6 +140,7 @@ app.get('/users/logout', (req, res) => {
     req.flash('success_msg', 'You have logged out')
     res.redirect('/users/login')
 })
+
 
 app.post('/users/register', async (req, res) => {
     const { name, email, password, password2 } = req.body
@@ -143,9 +218,46 @@ function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
     }
-
     res.redirect('/users/login')
 }
+
+
+async function getMain (req, res) {
+    try{
+        const {rows : listMain} = await pool.query(`SELECT * FROM main_forum`)
+        return listMain
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+async function getSub (req, res) {
+    try{
+        const {rows : listSub} = await pool.query(`SELECT * FROM sub_forum`)
+        return listSub
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+async function getThread (req, res) {
+    try{
+        const {rows : listThread} = await pool.query(`SELECT * FROM discussion`)
+        return listThread
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+async function getUsers (req, res) {
+    try{
+        const {rows : listUsers} = await pool.query(`SELECT * FROM users`)
+        return listUsers
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

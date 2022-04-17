@@ -526,7 +526,7 @@ h1, h2, h3, h4, h5, h6 {
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
-.sidebar {
+/* .sidebar {
   position: fixed;
   top: 60px;
   left: 0;
@@ -657,7 +657,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .sidebar-nav .nav-content a.active i {
   background-color: #4154f1;
-}
+} */
 
 /*--------------------------------------------------------------
 # Hero Section
@@ -710,12 +710,12 @@ h1, h2, h3, h4, h5, h6 {
   padding: 14px 30px;
   border-radius: 3px;
   margin: 10px;
-  color: #000;
+  color: #fff;
   background: #012970;
 }
 #hero .btn-get-started:hover {
   transition: 0.5s;
-  background: #012970;
+  background: #00ffff;
   color: #fff;
 }
 @media (min-width: 1024px) {

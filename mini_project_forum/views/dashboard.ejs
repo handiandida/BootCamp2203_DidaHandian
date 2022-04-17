@@ -1,4 +1,131 @@
-<section class="section dashboard">
-    <h1><%= user %> </h1>
-    <a href="/users/logout">Logout</a>
-</section>
+<%- include('layout/nav') %>
+
+<main id="main" class="main">
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-xl-9">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+    
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#all">ALL</button>
+                        </li>
+    
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#games">GAMES</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tech">TECH</button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sport">SPORT</button>
+                        </li>
+    
+                        </ul>
+                        <div class="tab-content pt-2">
+    
+                        <div class="tab-pane fade show active profile-overview" id="all">
+                            <div class="card text-center">
+                                <% thread.forEach(tr => { %>
+                                <div class="card-header">
+                                    <%= tr.title_thread %> 
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text"><%= tr.body_thread %></p>
+                                    <a href="#" class="btn btn-primary">Details</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    Created By : <%= user %> | <%= tr.date_thread %>  
+                                </div>
+                                <% }) %>
+                            </div>
+                        </div>
+    
+                        <div class="tab-pane fade profile-edit pt-3" id="games">
+
+                            <div class="tab-pane fade show active profile-overview" id="all">
+                                <div class="card text-center">
+                                    <div class="card-header">
+                                        Featured
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        2 days ago
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+
+                        <div class="tab-pane fade profile-edit pt-3" id="tech">
+
+                            <div class="tab-pane fade show active profile-overview" id="all">
+                                <div class="card text-center">
+                                    <div class="card-header">
+                                        Featured
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        2 days ago
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+
+                        <div class="tab-pane fade profile-edit pt-3" id="sport">
+
+                            <div class="tab-pane fade show active profile-overview" id="all">
+                                <div class="card text-center">
+                                    <div class="card-header">
+                                        Featured
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Special title treatment</h5>
+                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        2 days ago
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+    
+                        </div><!-- End Bordered Tabs -->
+    
+                    </div><!-- End Bordered Tabs -->
+                </div>
+            </div>
+
+            <div class="col-xl-3">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <div class="text-center">
+                            <h3><%= user %></h3>
+                        </div>
+                        <hr>
+                        <div class="d-grid gap-2 mt-3">
+                            <a href="/users/add-thread" class="btn btn-primary">Create Discussion Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
